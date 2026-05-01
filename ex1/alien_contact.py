@@ -34,7 +34,7 @@ class AlienContact(BaseModel):
         if self.contact_type == (ContactType.physical):
             if not self.is_verified:
                 raise ValueError(
-                    "ERROR]: Physical contact reports must be verified"
+                    "[ERROR]: Physical contact reports must be verified"
                 )
         return self
 
