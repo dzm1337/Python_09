@@ -8,13 +8,13 @@ class ContactType(str, Enum):
     radio = "radio"
     visual = "visual"
     physical = "physical"
-    telephatic = "telephatic"
+    telepathic = "telepathic"
 
 
 class AlienContact(BaseModel):
     contact_id: str = Field(..., min_length=5, max_length=15)
-    time_stamp: datetime
-    location: str = Field(..., min_length=3, max_length=15)
+    timestamp: datetime
+    location: str = Field(..., min_length=3, max_length=100)
     contact_type: ContactType
     signal_strength: float = Field(..., ge=0, le=10)
     duration_minutes: int = Field(..., ge=1, le=1440)
@@ -41,11 +41,11 @@ class AlienContact(BaseModel):
     @model_validator(mode="after")
     def telephatic_contact_validator(self):
         if (
-            self.contact_type == (ContactType.telephatic)
+            self.contact_type == (ContactType.telepathic)
             and self.witness_count < 3
         ):
             raise ValueError(
-                "[ERROR]: Telephatic contact requires at least 3 witnesses"
+                "[ERROR]: Telepathic contact requires at least 3 witnesses"
             )
         return self
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
         print("Valid contact report:")
         alien_contact = AlienContact(
             contact_id="AC_2024_001",
-            time_stamp=datetime.now(),
+            timestamp=datetime.now(),
             location="Area 51, Nevada",
             contact_type=ContactType.radio,
             signal_strength=8.5,
@@ -87,9 +87,9 @@ Message: '{alien_contact.message_received}'""")
         print("======================================")
         alien_contact = AlienContact(
             contact_id="ac_2024_001",
-            time_stamp=datetime.now(),
+            timestamp=datetime.now(),
             location="Area 51, Nevada",
-            contact_type=ContactType.telephatic,
+            contact_type=ContactType.telepathic,
             signal_strength=8.5,
             duration_minutes=45,
             witness_count=2,
