@@ -71,7 +71,7 @@ if __name__ == "__main__":
     sarah_connor = CrewMember(
         member_id="AC2024",
         name="Sarah Connor",
-        rank=CrewRanks.captain,
+        rank=CrewRanks.commander,
         age=34,
         specialization="Mission Commander",
         years_experience=6,
@@ -114,6 +114,7 @@ Duration: {space_mission.duration_days} days
 Budget: ${space_mission.budget_millions}M
 Crew size: {len(space_mission.crew)}
 """)
+    print("Crew members:")
     for member in space_mission.crew:
         print(
             f"- {member.name} ({member.rank.name}) - {member.specialization}"

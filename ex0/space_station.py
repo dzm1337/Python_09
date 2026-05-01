@@ -24,7 +24,7 @@ def main() -> None:
             power_level=85.5,
             oxygen_level=92.3,
             last_maintenance=datetime.now(),
-            is_operational=False,
+            is_operational=True,
         )
         status: str = (
             "Operational"

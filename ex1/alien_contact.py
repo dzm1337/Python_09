@@ -74,10 +74,10 @@ if __name__ == "__main__":
             message_received="Greetings from Zeta Reticuli",
         )
         print(f"""ID: {alien_contact.contact_id}
-Type: {alien_contact.contact_type}
+Type: {alien_contact.contact_type.name}
 Location: {alien_contact.location}
-Signal: {alien_contact.signal_strength}
-Duration: {alien_contact.duration_minutes}
+Signal: {alien_contact.signal_strength}/10
+Duration: {alien_contact.duration_minutes} minutes
 Witnesses: {alien_contact.witness_count}
 Message: '{alien_contact.message_received}'""")
     except ValidationError as e:
@@ -89,7 +89,7 @@ Message: '{alien_contact.message_received}'""")
             contact_id="ac_2024_001",
             time_stamp=datetime.now(),
             location="Area 51, Nevada",
-            contact_type=ContactType.physical,
+            contact_type=ContactType.telephatic,
             signal_strength=8.5,
             duration_minutes=45,
             witness_count=2,
