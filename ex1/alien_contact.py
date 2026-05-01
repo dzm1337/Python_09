@@ -32,10 +32,8 @@ class AlienContact(BaseModel):
     @model_validator(mode="after")
     def physical_contact_validator(self):
         if self.contact_type == (ContactType.physical):
-            print(
-                "***[REPORT] Physical contact with "
-                "aliens has been made [REPORT]***"
-            )
+            if not self.is_verified:
+                raise ValueError("ERROR]: Physical contact reports must be verified")
         return self
 
     @model_validator(mode="after")
