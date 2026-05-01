@@ -26,8 +26,8 @@ class SpaceMission(BaseModel):
     mission_id: str = Field(..., min_length=5, max_length=15)
     mission_name: str = Field(..., min_length=3, max_length=100)
     destination: str = Field(..., min_length=3, max_length=50)
-    launch_time: datetime
-    duration_days: int = Field(..., ge=1, le=3650)  # max 10 years
+    launch_date: datetime
+    duration_days: int = Field(..., ge=1, le=3650)
     crew: list[CrewMember] = Field(..., min_length=1, max_length=12)
     mission_status: str = Field(default="planned")
     budget_millions: float = Field(..., ge=1, le=10000)
@@ -105,7 +105,7 @@ if __name__ == "__main__":
         duration_days=900,
         crew=[sarah_connor, john_smith, alice_johnson],
         budget_millions=2500,
-        launch_time=datetime.now(),
+        launch_date=datetime.now(),
     )
     print(f"""Mission: {space_mission.mission_name}
 ID: {space_mission.mission_id}
@@ -128,7 +128,7 @@ Crew size: {len(space_mission.crew)}
             duration_days=900,
             crew=[alice_johnson, john_smith],
             budget_millions=2500,
-            launch_time=datetime.now(),
+            launch_date=datetime.now(),
         )
     except ValidationError as e:
         print("Expected validation error:")
