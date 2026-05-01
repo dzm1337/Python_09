@@ -40,7 +40,7 @@ def main() -> None:
         print(f"Oxygen: {space_station.oxygen_level}%")
         print(f"Status: {status}\n")
     except ValidationError as e:
-        print(e.errors[0]["msg"])
+        print(e.errors()[0]["msg"])
 
     try:
         print("========================================")

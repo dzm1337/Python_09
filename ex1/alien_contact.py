@@ -17,7 +17,7 @@ class AlienContact(BaseModel):
     location: str = Field(..., min_length=3, max_length=15)
     contact_type: ContactType
     signal_strength: float = Field(..., ge=0, le=10)
-    duration_minutes: int = Field(..., ge=1, le=1440)  #  max 24h
+    duration_minutes: int = Field(..., ge=1, le=1440)
     witness_count: int = Field(..., ge=1, le=100)
     message_received: str | None = Field(default=None, max_length=500)
     is_verified: bool = False
@@ -33,7 +33,8 @@ class AlienContact(BaseModel):
     def physical_contact_validator(self):
         if self.contact_type == (ContactType.physical):
             print(
-                "***[REPORT] Physical contact with aliens has been made [REPORT]***"
+                "***[REPORT] Physical contact with "
+                "aliens has been made [REPORT]***"
             )
         return self
 
@@ -88,7 +89,7 @@ Message: '{alien_contact.message_received}'""")
             contact_id="ac_2024_001",
             time_stamp=datetime.now(),
             location="Area 51, Nevada",
-            contact_type=ContactType.telephatic,
+            contact_type=ContactType.physical,
             signal_strength=8.5,
             duration_minutes=45,
             witness_count=2,
