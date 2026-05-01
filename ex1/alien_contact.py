@@ -33,7 +33,9 @@ class AlienContact(BaseModel):
     def physical_contact_validator(self):
         if self.contact_type == (ContactType.physical):
             if not self.is_verified:
-                raise ValueError("ERROR]: Physical contact reports must be verified")
+                raise ValueError(
+                    "ERROR]: Physical contact reports must be verified"
+                )
         return self
 
     @model_validator(mode="after")
@@ -95,4 +97,5 @@ Message: '{alien_contact.message_received}'""")
         )
     except ValidationError as e:
         print("Expected validation error:")
-        print(e.errors()[0]["ctx"]["error"])
+        msg = e.errors()[0]["msg"].replace("Value error, ", "")
+        print(msg)

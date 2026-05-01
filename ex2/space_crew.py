@@ -132,4 +132,5 @@ Crew size: {len(space_mission.crew)}
         )
     except ValidationError as e:
         print("Expected validation error:")
-        print(e.errors()[0]["ctx"]["error"])
+        msg = e.errors()[0]["msg"].replace("Value error, ", "")
+        print(msg)
