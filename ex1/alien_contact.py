@@ -16,7 +16,7 @@ class AlienContact(BaseModel):
     timestamp: datetime = Field(...)
     location: str = Field(..., min_length=3, max_length=100)
     contact_type: ContactType
-    signal_strength: float = Field(..., ge=0, le=10)
+    signal_strength: float = Field(..., ge=0, le=10.0)
     duration_minutes: int = Field(..., ge=1, le=1440)
     witness_count: int = Field(..., ge=1, le=100)
     message_received: str | None = Field(default=None, max_length=500)
