@@ -9,13 +9,14 @@ class SpaceStation(BaseModel):
     crew_size: int = Field(..., ge=1, le=20)
     power_level: float = Field(..., ge=0, le=100)
     oxygen_level: float = Field(..., ge=0, le=100)
-    last_maintenance: datetime
+    last_maintenance: datetime = Field(...)
     notes: str | None = Field(default=None, max_length=200)
-    is_operational: bool = True
+    is_operational: bool = Field(default=True)
 
 
 def main() -> None:
     try:
+        print("Space Station Data Validation")
         print("========================================")
         space_station = SpaceStation(
             station_id="IS001",
@@ -31,7 +32,6 @@ def main() -> None:
             if space_station.is_operational
             else "Not Operational"
         )
-        print("Space Station Data Validation")
         print("Valid station created:")
         print(f"ID: {space_station.station_id}")
         print(f"Name: {space_station.name}")
@@ -53,14 +53,6 @@ def main() -> None:
             last_maintenance=datetime.now(),
             is_operational=False,
         )
-        print("Space Station Data Validation")
-        print("Valid station created:")
-        print(f"ID: {space_station.station_id}")
-        print(f"Name: {space_station.name}")
-        print(f"Crew: {space_station.crew_size} people")
-        print(f"Power: {space_station.power_level}%")
-        print(f"Oxygen: {space_station.oxygen_level}%")
-        print(f"Status: {status}")
     except ValidationError as e:
         print("Expected validation error:")
         print(e.errors()[0]["msg"])
