@@ -19,7 +19,7 @@ def main() -> None:
         print("Space Station Data Validation")
         print("========================================")
         space_station = SpaceStation(
-            station_id="IS001",
+            station_id="ISS001",
             name="International Space Station",
             crew_size=6,
             power_level=85.5,
@@ -45,7 +45,7 @@ def main() -> None:
     try:
         print("========================================")
         space_station = SpaceStation(
-            station_id="IS001",
+            station_id="ISS001",
             name="Intertional Space Station",
             crew_size=39,
             power_level=85.5,
