@@ -4,7 +4,7 @@ from enum import Enum
 from pydantic import BaseModel, Field, ValidationError, model_validator
 
 
-class CrewRanks(str, Enum):
+class Rank(str, Enum):
     cadet = "cadet"
     officer = "officer"
     lieutenant = "lieutenant"
@@ -15,34 +15,33 @@ class CrewRanks(str, Enum):
 class CrewMember(BaseModel):
     member_id: str = Field(..., min_length=3, max_length=10)
     name: str = Field(..., min_length=2, max_length=50)
-    rank: CrewRanks
+    rank: Rank
     age: int = Field(..., ge=18, le=80)
     specialization: str = Field(..., min_length=3, max_length=30)
     years_experience: int = Field(..., ge=0, le=50)
-    is_active: bool = True
+    is_active: bool = Field(default=True)
 
 
 class SpaceMission(BaseModel):
     mission_id: str = Field(..., min_length=5, max_length=15)
     mission_name: str = Field(..., min_length=3, max_length=100)
     destination: str = Field(..., min_length=3, max_length=50)
-    launch_date: datetime
+    launch_date: datetime = Field(...)
     duration_days: int = Field(..., ge=1, le=3650)
     crew: list[CrewMember] = Field(..., min_length=1, max_length=12)
     mission_status: str = Field(default="planned")
-    budget_millions: float = Field(..., ge=1, le=10000)
+    budget_millions: float = Field(..., ge=1.0, le=10000.0)
 
     @model_validator(mode="after")
     def mission_validations(self) -> "SpaceMission":
         if self.mission_id[0] != "M":
             raise ValueError("[ERROR]: mission_id must start with 'M'")
 
-        required_rank: bool = any(
-            member.rank == CrewRanks.captain
-            or member.rank == CrewRanks.commander
+        has_leader: bool = any(
+            member.rank in (Rank.captain, Rank.commander)
             for member in self.crew
         )
-        if not required_rank:
+        if not has_leader:
             raise ValueError(
                 "[ERROR]: Crew must have at least one captain or commander"
             )
@@ -71,7 +70,7 @@ if __name__ == "__main__":
     sarah_connor = CrewMember(
         member_id="AC2024",
         name="Sarah Connor",
-        rank=CrewRanks.commander,
+        rank=Rank.commander,
         age=34,
         specialization="Mission Commander",
         years_experience=6,
@@ -81,7 +80,7 @@ if __name__ == "__main__":
     john_smith = CrewMember(
         member_id="AC1996",
         name="John Smith",
-        rank=CrewRanks.lieutenant,
+        rank=Rank.lieutenant,
         age=42,
         specialization="Navigation",
         years_experience=5,
@@ -91,7 +90,7 @@ if __name__ == "__main__":
     alice_johnson = CrewMember(
         member_id="AC2042",
         name="Alice Johnson",
-        rank=CrewRanks.officer,
+        rank=Rank.officer,
         age=23,
         specialization="Engineering",
         years_experience=6,
