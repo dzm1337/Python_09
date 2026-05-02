@@ -43,7 +43,7 @@ class SpaceMission(BaseModel):
         )
         if not has_leader:
             raise ValueError(
-                "[ERROR]: Crew must have at least one captain or commander"
+                "[ERROR]: Mission must have at least one captain or commander"
             )
 
         if self.duration_days > 365:
