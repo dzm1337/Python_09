@@ -20,7 +20,7 @@ class AlienContact(BaseModel):
     duration_minutes: int = Field(..., ge=1, le=1440)
     witness_count: int = Field(..., ge=1, le=100)
     message_received: str | None = Field(default=None, max_length=500)
-    is_verified: bool = False
+    is_verified: bool = Field(default=False)
 
     @model_validator(mode="after")
     def alien_contact_validator(self):
@@ -61,6 +61,7 @@ if __name__ == "__main__":
         signal_strength=8.5,
         duration_minutes=45,
         witness_count=5,
+        is_verified=True,
         message_received="Greetings from Zeta Reticuli",
     )
     print(f"""ID: {alien_contact.contact_id}
@@ -81,6 +82,7 @@ Message: '{alien_contact.message_received}'""")
             signal_strength=8.5,
             duration_minutes=45,
             witness_count=2,
+            is_verified=False,
             message_received="Greetings from Zeta Reticuli",
         )
     except ValidationError as e:
